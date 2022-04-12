@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
 import { useState } from 'react';
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
@@ -20,13 +20,22 @@ export default function App() {
         <Button title='Add Goal' onPress={addButtonHandler}/>
       </View>
       <View style={styles.goalList}>
-        <ScrollView >
-          <Text>List Of Goals :</Text>
-            {courseGoalsArray.map((goal)=>
-            <View style={styles.eachGoal}>
-              <Text key={courseGoalsArray.indexOf(goal)}>{goal}</Text>
-            </View>)}  
-        </ScrollView>
+      <Text>List Of Goals :</Text>
+        <FlatList 
+          data={courseGoalsArray}
+          renderItem={
+            (itemData) => {
+              return(
+                <View key={itemData.index} style={styles.eachGoal}>
+                  <Text >{itemData.item}</Text>
+                </View>
+              )
+            }
+          }
+          keyExtractor={(item,index)=>{
+            return Math.random(0)
+          }}
+        /> 
       </View>
     </View>
   );
