@@ -11,23 +11,31 @@ import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  
   const [courseGoalsArray, setCourseGoalsArray] = useState([]);
   function addButtonHandler(inputGoal) {
-    setCourseGoalsArray([...courseGoalsArray, inputGoal]);
-    // setInputGoal("");
-}
+    setCourseGoalsArray([...courseGoalsArray, inputGoal])
+  }
+
+  function onTapDeleteItemHandler() {
+    console.log('Delete')
+  }
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addButtonHandler}/>
+      <GoalInput
+        onAddGoal={addButtonHandler}
+        onDeleteItem={onTapDeleteItemHandler}
+      />
       <View style={styles.goalList}>
         <Text>List Of Goals :</Text>
         <FlatList
           data={courseGoalsArray}
           renderItem={(itemData) => {
             return (
-              <GoalItem item={itemData.item}/>
+              <GoalItem
+                item={itemData.item}
+                onDeleteItem={onTapDeleteItemHandler}
+              />
             );
           }}
           keyExtractor={(item, index) => {
@@ -47,5 +55,5 @@ const styles = StyleSheet.create({
   },
   goalList: {
     flex: 6,
-  }
+  },
 });
