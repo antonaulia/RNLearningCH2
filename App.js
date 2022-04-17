@@ -13,11 +13,17 @@ import GoalInput from "./components/GoalInput";
 export default function App() {
   const [courseGoalsArray, setCourseGoalsArray] = useState([]);
   function addButtonHandler(inputGoal) {
-    setCourseGoalsArray([...courseGoalsArray, inputGoal])
+    setCourseGoalsArray([
+      ...courseGoalsArray,
+      { goaltext: inputGoal, goalId: Math.random() },
+    ]);
   }
 
-  function onTapDeleteItemHandler() {
-    console.log('Delete')
+  function onTapDeleteItemHandler(goalIdChoosed) {
+    // console.log(goalIdChoosed);
+    setCourseGoalsArray((courseGoalsArray) => {
+      return courseGoalsArray.filter((goal) => goal.goalId !== goalIdChoosed);
+    });
   }
 
   return (
