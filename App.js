@@ -17,6 +17,7 @@ export default function App() {
       ...courseGoalsArray,
       { goaltext: inputGoal, goalId: Math.random() },
     ]);
+    setModalIsVisible()
   }
 
   function onTapDeleteItemHandler(goalIdChoosed) {
@@ -26,12 +27,25 @@ export default function App() {
     });
   }
 
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  
+  function modalIsVisibleHandler(){
+    setModalIsVisible(true)
+  }
+  function modalIsNotVisibleHandler(){
+    setModalIsVisible(false)
+  }
   return (
     <View style={styles.appContainer}>
-      <GoalInput
-        onAddGoal={addButtonHandler}
-        onDeleteItem={onTapDeleteItemHandler}
-      />
+      <Button title="Add New Goal" onPress={modalIsVisibleHandler} />
+      {modalIsVisible && (
+        <GoalInput
+          onAddGoal={addButtonHandler}
+          onDeleteItem={onTapDeleteItemHandler}
+          isVisible={modalIsVisible}
+          onCancel={modalIsNotVisibleHandler}
+        />
+      )}
       <View style={styles.goalList}>
         <Text>List Of Goals :</Text>
         <FlatList
@@ -61,5 +75,6 @@ const styles = StyleSheet.create({
   },
   goalList: {
     flex: 6,
+    paddingTop: 24
   },
 });
